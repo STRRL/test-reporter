@@ -158,7 +158,7 @@ class TestReporter {
       ...github.context.repo
     })
     suites.data.check_suites[0].app.name
-    core.info(`list check suites ${JSON.stringify(suites)}`)
+    core.info(`List check suites ${JSON.stringify(suites)}`)
 
     core.info(`Creating check run ${name}`)
     const createResp = await this.octokit.checks.create({
