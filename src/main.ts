@@ -157,8 +157,14 @@ class TestReporter {
       ref: this.context.sha,
       ...github.context.repo
     })
-    suites.data.check_suites[0].app.name
-    core.info(`List check suites ${JSON.stringify(suites)}`)
+    const ghaSuite = suites.data.check_suites.find(suite => suite.app.name === 'GitHub Actions')!!
+
+    const checks = await this.octokit.checks.listForSuite({
+      check_suite_id: ghaSuite.id,
+      ...github.context.repo
+    })
+
+    core.info(`List runs for GHA: ${JSON.stringify(checks)}`)
 
     core.info(`Creating check run ${name}`)
     const createResp = await this.octokit.checks.create({
