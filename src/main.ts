@@ -152,6 +152,13 @@ class TestReporter {
       const tr = await parser.parse(file, content)
       results.push(tr)
     }
+    core.info(`Creating check suite test-reporter`)
+    const suites = await this.octokit.checks.listSuitesForRef({
+      ref: this.context.sha,
+      ...github.context.repo
+    })
+    suites.data.check_suites[0].app.name
+    core.info(`list check suites ${JSON.stringify(suites)}`)
 
     core.info(`Creating check run ${name}`)
     const createResp = await this.octokit.checks.create({
